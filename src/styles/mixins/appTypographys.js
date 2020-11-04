@@ -43,23 +43,28 @@ export const appTypographys = {
   text: {
     large: `
       font-size: ${appFontSizes.tera};
+      font-weight: 400;
       line-height: ${appLineHeightDefault};
     `,
     medium: `
       font-size: ${appFontSizes.mega};
+      font-weight: 400;
       line-height: ${appLineHeightDefault};
     `,
     caption: `
       font-size: ${appFontSizes.kilo};
+      font-weight: 400;
       line-height: ${appLineHeightDefault};
       text-transform: uppercase;
     `,
     normal: `
       font-size: ${appFontSizes.base};
+      font-weight: 400;
       line-height: ${appLineHeightDefault};
     `,
     small: `
       font-size: ${appFontSizes.milli};
+      font-weight: 400;
       line-height: ${appLineHeightDefault};
     `,
   },

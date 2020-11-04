@@ -17,7 +17,11 @@ export const PokemonList = () => {
   return (
     <Container>
       {pokemonNames.map((pokemonName) => (
-        <PokemonListCard key={pokemonName} name={pokemonName} />
+        <PokemonListCard
+          key={pokemonName}
+          name={pokemonName}
+          extended={false}
+        />
       ))}
     </Container>
   )

@@ -1,4 +1,5 @@
 import { Logo } from "./Logo"
 import { PokemonListCard } from "./PokemonListCard"
+import { RoundIconButton } from "./RoundIconButton"
 
-export { Logo, PokemonListCard }
+export { Logo, PokemonListCard, RoundIconButton }

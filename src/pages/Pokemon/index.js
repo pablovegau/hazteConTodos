@@ -2,7 +2,7 @@ import React from "react"
 import { PokemonList } from "../../containers/PokemonList"
 import { Logo } from "../../components"
 
-import { Container, LogoWrapper } from "./styles"
+import { Container, Description, LogoWrapper } from "./styles"
 
 export const Pokemon = () => {
   return (
@@ -10,6 +10,10 @@ export const Pokemon = () => {
       <LogoWrapper>
         <Logo />
       </LogoWrapper>
+      <Description>
+        <p>Generation 1</p>
+        <p>151 pokemons</p>
+      </Description>
       <PokemonList />
     </Container>
   )
