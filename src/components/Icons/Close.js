@@ -7,10 +7,10 @@ export function Close({ fill = "#000000", height = 32, width = 32 }) {
       fill="none"
       height={height}
       width={width}
-      title="createIcon"
+      title="closeIcon"
     >
       <g
-        fill="none"
+        fill={fill}
         fillRule="evenodd"
         stroke={fill}
         strokeLinecap="round"
