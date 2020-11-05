@@ -5,6 +5,7 @@ import { appGenericSizes } from "./theme/appGenerics"
 import { appGrayColors, appTransparentGrayColors } from "./theme/appGrayColors"
 import { appMargins } from "./theme/appMargins"
 import { appPaddings } from "./theme/appPaddings"
+import { appShadows } from "./theme/appShadows"
 
 export const theme = css`
   ${appBorderRadius}
@@ -13,5 +14,6 @@ export const theme = css`
   ${appGrayColors}
   ${appMargins}
   ${appPaddings}
+  ${appShadows}
   ${appTransparentGrayColors}
 `

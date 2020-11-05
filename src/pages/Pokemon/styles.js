@@ -5,6 +5,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: var(--margin-kilo);
 `
 
 export const LogoWrapper = styled.div`

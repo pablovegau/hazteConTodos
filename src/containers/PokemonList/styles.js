@@ -9,3 +9,12 @@ export const Container = styled.section`
   justify-content: center;
   max-width: ${PokemonListMaxWidth};
 `
+
+export const Search = styled.div`
+  display: flex;
+  margin-bottom: var(--margin-base);
+
+  label {
+    margin-right: var(--margin-base);
+  }
+`
