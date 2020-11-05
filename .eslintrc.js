@@ -5,7 +5,14 @@ module.exports = {
     node: true,
     jest: true,
   },
-  extends: ["plugin:react/recommended", "standard", "prettier"],
+  extends: [
+    "plugin:react/recommended",
+    "standard",
+    "prettier",
+    "plugin:testing-library/recommended",
+    "plugin:testing-library/react",
+    "plugin:jest-dom/recommended",
+  ],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,

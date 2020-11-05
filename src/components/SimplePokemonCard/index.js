@@ -5,13 +5,13 @@ import { useNearScreen } from "../../hooks/useNearScreen"
 
 import { CardContainer, Container } from "./styles"
 
-export const SimplePokemonCard = ({ name = "unown", extended = false }) => {
+export const SimplePokemonCard = ({ name = "unown" }) => {
   const { isNearScreen, fromRef } = useNearScreen()
   return (
     <Container ref={fromRef}>
       {isNearScreen ? (
         <Link to={`/pokemon/${name}`}>
-          <CardContainer extended={extended}>
+          <CardContainer>
             <img
               src={`https://img.pokemondb.net/sprites/black-white/anim/normal/${name}.gif`}
             />

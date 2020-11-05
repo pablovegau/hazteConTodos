@@ -16,14 +16,15 @@ import {
 
 export const PokemonCard = ({
   name = "unown",
-  id,
-  types = [],
-  height,
-  habilities = [],
+  id = "201",
+  types = ["psychic"],
+  height = "5",
+  habilities = ["levitate"],
 }) => {
   return (
     <Container>
       <Link to={`/pokemon`}>
+        hallo
         <CloseWrapper>
           <RoundIconButton>
             <Close />
@@ -31,9 +32,11 @@ export const PokemonCard = ({
         </CloseWrapper>
       </Link>
       <img
+        alt={`${name} image`}
+        name={`${name} image`}
         src={`https://img.pokemondb.net/sprites/black-white/anim/normal/${name}.gif`}
       />
-      {name}
+      <p>{name}</p>
       <Data>
         <Id>
           ID: <span>{id}</span>
