@@ -24,7 +24,6 @@ export const PokemonCard = ({
   return (
     <Container>
       <Link to={`/pokemon`}>
-        hallo
         <CloseWrapper>
           <RoundIconButton>
             <Close />
