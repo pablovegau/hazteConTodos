@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react"
-import { SimplePokemonCard } from "../../components"
+import { SimplePokemonCard, Search } from "../../components"
 import { getPokemonNames } from "../../services/pokeapi"
 import { useStatus } from "../../hooks/useStatus"
 
-import { Container, Search } from "./styles"
+import { Container } from "./styles"
 
 export const PokemonList = () => {
   const [pokemonNames, setPokemonNames] = useState([])
   const [searchPokemonNames, setSearchPokemonNames] = useState([])
   const [status, setStatus, STATUS] = useStatus()
-
-  useEffect(() => console.log(searchPokemonNames), [searchPokemonNames])
 
   useEffect(() => {
     const firstGenerationPokemonsCount = 151
@@ -51,7 +49,6 @@ export const PokemonList = () => {
   }
 
   function handleOnChange(event) {
-    console.log(event.target.value)
     const pokemonNamesFilteredBySearchValue = pokemonNames.filter(
       (pokemonName) => pokemonName.toLowerCase().includes(event.target.value)
     )
@@ -60,10 +57,7 @@ export const PokemonList = () => {
 
   return (
     <>
-      <Search>
-        <label htmlFor="searchInput">Search</label>
-        <input id="searchInput" onChange={handleOnChange} />
-      </Search>
+      <Search handleOnChange={handleOnChange} />
       {renderPokemon()}
     </>
   )
