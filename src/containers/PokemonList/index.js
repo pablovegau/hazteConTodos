@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react"
-import { SimplePokemonCard, Search } from "../../components"
+import { SimplePokemonCard, Search, Spinner } from "../../components"
 import { getPokemonNames } from "../../services/pokeapi"
 import { useStatus } from "../../hooks/useStatus"
 
-import { Container } from "./styles"
+import { Container, SpinnerContainer } from "./styles"
 
 export const PokemonList = () => {
   const [pokemonNames, setPokemonNames] = useState([])
@@ -26,7 +26,11 @@ export const PokemonList = () => {
 
   function renderPokemon() {
     if (status === STATUS.IDLE || status === STATUS.PENDING) {
-      return <Container>Loading...</Container>
+      return (
+        <SpinnerContainer>
+          <Spinner />
+        </SpinnerContainer>
+      )
     }
 
     if (status === STATUS.REJECTED) {
@@ -34,8 +38,7 @@ export const PokemonList = () => {
     }
 
     if (status === STATUS.RESOLVED) {
-      const PokemonListToRender =
-        searchPokemonNames.length > 0 ? searchPokemonNames : pokemonNames
+      const PokemonListToRender = searchPokemonNames.length > 0 ? searchPokemonNames : pokemonNames
       return (
         <Container>
           {PokemonListToRender.map((pokemonName) => (
@@ -49,8 +52,8 @@ export const PokemonList = () => {
   }
 
   function handleOnChange(event) {
-    const pokemonNamesFilteredBySearchValue = pokemonNames.filter(
-      (pokemonName) => pokemonName.toLowerCase().includes(event.target.value)
+    const pokemonNamesFilteredBySearchValue = pokemonNames.filter((pokemonName) =>
+      pokemonName.toLowerCase().includes(event.target.value)
     )
     setSearchPokemonNames(pokemonNamesFilteredBySearchValue)
   }

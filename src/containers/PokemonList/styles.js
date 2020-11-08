@@ -10,11 +10,6 @@ export const Container = styled.section`
   max-width: ${PokemonListMaxWidth};
 `
 
-export const Search = styled.div`
-  display: flex;
-  margin-bottom: var(--margin-base);
-
-  label {
-    margin-right: var(--margin-base);
-  }
+export const SpinnerContainer = styled(Container)`
+  padding-top: var(--padding-giga);
 `

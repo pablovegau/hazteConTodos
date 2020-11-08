@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { PokemonCard } from "../../components"
+import { PokemonCard, Spinner } from "../../components"
 import { getPokemonData } from "../../services/pokeapi"
 import { useStatus } from "../../hooks/useStatus"
 
@@ -26,7 +26,11 @@ export const PokemonDetail = () => {
 
   function renderPokemonCard() {
     if (status === STATUS.IDLE || status === STATUS.PENDING) {
-      return <Container>Loading...</Container>
+      return (
+        <Container>
+          <Spinner />
+        </Container>
+      )
     }
 
     if (status === STATUS.REJECTED) {
