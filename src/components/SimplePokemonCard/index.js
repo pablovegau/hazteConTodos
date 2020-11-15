@@ -5,7 +5,6 @@ import { CardContainer, Container } from "./styles"
 export const SimplePokemonCard = ({ name = "unown" }) => {
   return (
     <Container>
-      {/* <Link to={`/pokemon/${name}`}> */}
       <Link to={`/${name}`}>
         <CardContainer>
           <img loading="lazy" src={`https://img.pokemondb.net/sprites/black-white/anim/normal/${name}.gif`} />

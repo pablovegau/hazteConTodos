@@ -1,15 +1,8 @@
 import React from "react"
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom"
-
-import { GlobalStyle } from "../styles/globalStyle"
-
-import { Pokemon } from "../pages/Pokemon"
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom"
+import { Pokemons } from "../pages/Pokemons"
 import { PokemonDetail } from "../pages/PokemonDetail"
+import { GlobalStyle } from "../styles/globalStyle"
 
 export const App = () => {
   return (
@@ -18,16 +11,13 @@ export const App = () => {
       <Router>
         <Switch>
           <Route exact path="/">
-            <Redirect to="/pokemon" />
+            <Pokemons />
           </Route>
-          <Route exact path="/pokemon">
-            <Pokemon />
-          </Route>
-          <Route path="/pokemon/:pokemon">
+          <Route path="/:pokemon">
             <PokemonDetail />
           </Route>
           <Route path="*">
-            <Redirect to="/pokemon" />
+            <Redirect to="/" />
           </Route>
         </Switch>
       </Router>

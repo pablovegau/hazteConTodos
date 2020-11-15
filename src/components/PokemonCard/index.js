@@ -1,18 +1,8 @@
 import React from "react"
 import { Link } from "react-router-dom"
-
 import { RoundIconButton } from ".."
 import { Close } from "../Icons"
-
-import {
-  Id,
-  Types,
-  Height,
-  Habilities,
-  CloseWrapper,
-  Container,
-  Data,
-} from "./styles"
+import { Id, Types, Height, Habilities, CloseWrapper, Container, Data } from "./styles"
 
 export const PokemonCard = ({
   name = "unown",
@@ -23,7 +13,7 @@ export const PokemonCard = ({
 }) => {
   return (
     <Container>
-      <Link to={`/pokemon`}>
+      <Link to={`/`}>
         <CloseWrapper>
           <RoundIconButton>
             <Close />

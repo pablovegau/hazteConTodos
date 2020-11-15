@@ -1,15 +1,23 @@
 import axios from "axios"
+import { API_URL } from "../settings"
 
-const API = "https://pokeapi.co/api/v2"
+export function getPokemonNames({ limit = 25, page = 0 }) {
+  const apiURL = `${API_URL}/pokemon?offset=${page * limit}&limit=${limit}`
 
-export function getPokemonNames({ offset = 20, limit = 20 }) {
-  return axios
-    .get(`${API}/pokemon?offset=${offset}&limit=${limit}`)
-    .then((response) => response.data.results.map((pokemon) => pokemon.name))
+  return axios.get(apiURL).then((response) => {
+    const { data } = response
+    const { results } = data
+
+    const pokemonNames = results.map((pokemon) => pokemon.name)
+
+    return {
+      pokemonNames,
+    }
+  })
 }
 
 export function getPokemonData({ pokemon }) {
-  return axios.get(`${API}/pokemon/${pokemon}`).then((response) => {
+  return axios.get(`${API_URL}/pokemon/${pokemon}`).then((response) => {
     const { data } = response
     const { id, types, height, abilities } = data
     const typesArray = types.map((type) => type.type.name)

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { PokemonCard, Spinner } from "../../components"
-import { getPokemonData } from "../../services/pokeapi"
 import { useStatus } from "../../hooks/useStatus"
-
+import { getPokemonData } from "../../services/pokeapi"
 import { Container } from "./styles"
 
 export const PokemonDetail = () => {

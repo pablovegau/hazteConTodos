@@ -1,28 +1,17 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { SimplePokemonCard, Search, Spinner } from "../../components"
-import { getPokemonNames } from "../../services/pokeapi"
-import { useStatus } from "../../hooks/useStatus"
+import { usePokemonNames } from "../../hooks/usePokemonNames"
+import { STATUS } from "../../hooks/useStatus"
 
 import { Container, SpinnerContainer } from "./styles"
 
 export const PokemonList = () => {
-  const [pokemonNames, setPokemonNames] = useState([])
+  const { pokemonNames, status, setPage } = usePokemonNames()
   const [searchPokemonNames, setSearchPokemonNames] = useState([])
-  const [status, setStatus, STATUS] = useStatus()
 
-  useEffect(() => {
-    const firstGenerationPokemonsCount = 151
-    setStatus(STATUS.PENDING)
-    getPokemonNames({ offset: 0, limit: firstGenerationPokemonsCount })
-      .then((pokemonNames) => {
-        setPokemonNames(pokemonNames)
-        setStatus(STATUS.RESOLVED)
-      })
-      .catch((e) => {
-        console.error(e)
-        setStatus(STATUS.REJECTED)
-      })
-  }, [])
+  function handleLoadMore() {
+    setPage((prevPage) => prevPage + 1)
+  }
 
   function renderPokemon() {
     if (status === STATUS.IDLE || status === STATUS.PENDING) {
@@ -44,6 +33,7 @@ export const PokemonList = () => {
           {PokemonListToRender.map((pokemonName) => (
             <SimplePokemonCard key={pokemonName} name={pokemonName} />
           ))}
+          <button onClick={handleLoadMore}>Load more</button>
         </Container>
       )
     }
