@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { rem } from "polished"
 import { appTypographys } from "../../styles/mixins"
 
 export const Container = styled.div`
@@ -24,4 +25,17 @@ export const Description = styled.div`
   p:last-child {
     ${appTypographys.text.small}
   }
+`
+
+const PokemonListMaxWidth = rem("816px")
+
+export const ListContainer = styled.section`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: ${PokemonListMaxWidth};
+`
+
+export const SpinnerContainer = styled(Container)`
+  padding-top: var(--padding-giga);
 `
