@@ -1,10 +1,10 @@
 import React, { useState, useRef, useCallback, useEffect } from "react"
-import { Logo, Spinner, Search, PokemonList } from "../../components"
+import { Logo, Search, PokemonList, RenderByStatus } from "../../components"
 import { usePokemonNames } from "../../hooks/usePokemonNames"
 import { useNearScreen } from "../../hooks/useNearScreen"
 import { STATUS } from "../../hooks/useStatus"
 import debounce from "just-debounce-it"
-import { Container, Description, LogoWrapper, ListContainer, SpinnerContainer } from "./styles"
+import { Container, Description, LogoWrapper, ListContainer } from "./styles"
 
 import { getPokemonByKeyword } from "../../services/pokeapi"
 
@@ -28,53 +28,7 @@ export const Pokemons = () => {
     if (isNearScreen) debounceNextPage()
   })
 
-  function renderNextPokemons() {
-    if ((nextLoadStatus === STATUS.IDLE || nextLoadStatus === STATUS.PENDING) && !searchKeyword) {
-      return (
-        <SpinnerContainer>
-          <Spinner />
-        </SpinnerContainer>
-      )
-    }
-
-    if (nextLoadStatus === STATUS.REJECTED) {
-      return <ListContainer>Error</ListContainer>
-    }
-
-    return null
-  }
-
-  function renderPokemons() {
-    if (firstLoadStatus === STATUS.IDLE || firstLoadStatus === STATUS.PENDING) {
-      return (
-        <SpinnerContainer>
-          <Spinner />
-        </SpinnerContainer>
-      )
-    }
-
-    if (firstLoadStatus === STATUS.REJECTED) {
-      return <ListContainer>Error</ListContainer>
-    }
-
-    if (firstLoadStatus === STATUS.RESOLVED) {
-      if (searchPokemonNames.length === 0 && searchKeyword) {
-        return <div>No results</div>
-      }
-      const PokemonListToRender = searchPokemonNames.length > 0 ? searchPokemonNames : pokemonNames
-      return (
-        <>
-          <ListContainer>
-            <PokemonList pokemons={PokemonListToRender} />
-          </ListContainer>
-          {renderNextPokemons()}
-          <div ref={visorRef} />
-        </>
-      )
-    }
-
-    return null
-  }
+  const PokemonListToRender = searchPokemonNames.length > 0 ? searchPokemonNames : pokemonNames
 
   async function handleOnChange(keyword) {
     setSearchKeyword(keyword)
@@ -91,7 +45,19 @@ export const Pokemons = () => {
         <p>151 pokemons</p>
       </Description>
       <Search handleOnChange={handleOnChange} />
-      {renderPokemons()}
+      <RenderByStatus status={firstLoadStatus}>
+        {searchPokemonNames.length === 0 && searchKeyword ? (
+          <div>No results</div>
+        ) : (
+          <>
+            <ListContainer>
+              <PokemonList pokemons={PokemonListToRender} />
+            </ListContainer>
+            <RenderByStatus status={nextLoadStatus} />
+            <div ref={visorRef} />
+          </>
+        )}
+      </RenderByStatus>
     </Container>
   )
 }

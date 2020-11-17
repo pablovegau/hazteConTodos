@@ -35,7 +35,3 @@ export const ListContainer = styled.section`
   justify-content: center;
   max-width: ${PokemonListMaxWidth};
 `
-
-export const SpinnerContainer = styled(Container)`
-  padding-top: var(--padding-giga);
-`
