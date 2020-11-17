@@ -1,19 +1,35 @@
-import React, { useState } from "react"
+import React, { useState, useRef, useCallback, useEffect } from "react"
 import { Logo, Spinner, Search, PokemonList } from "../../components"
 import { usePokemonNames } from "../../hooks/usePokemonNames"
+import { useNearScreen } from "../../hooks/useNearScreen"
 import { STATUS } from "../../hooks/useStatus"
+import debounce from "just-debounce-it"
 import { Container, Description, LogoWrapper, ListContainer, SpinnerContainer } from "./styles"
 
+import { getPokemonByKeyword } from "../../services/pokeapi"
+
 export const Pokemons = () => {
-  const { pokemonNames, status, setPage } = usePokemonNames()
+  const { pokemonNames, firstLoadStatus, nextLoadStatus, setPage } = usePokemonNames()
   const [searchPokemonNames, setSearchPokemonNames] = useState([])
+  const [searchKeyword, setSearchKeyword] = useState()
+  const visorRef = useRef()
+  const { isNearScreen } = useNearScreen({
+    distance: "1000px",
+    externalRef: !(firstLoadStatus === STATUS.IDLE || firstLoadStatus === STATUS.PENDING) && visorRef,
+    once: false,
+  })
 
-  function handleLoadMore() {
-    setPage((prevPage) => prevPage + 1)
-  }
+  const debounceNextPage = useCallback(
+    debounce(() => setPage((prevPage) => prevPage + 1), 100),
+    []
+  )
 
-  function renderPokemon() {
-    if (status === STATUS.IDLE || status === STATUS.PENDING) {
+  useEffect(() => {
+    if (isNearScreen) debounceNextPage()
+  })
+
+  function renderNextPokemons() {
+    if ((nextLoadStatus === STATUS.IDLE || nextLoadStatus === STATUS.PENDING) && !searchKeyword) {
       return (
         <SpinnerContainer>
           <Spinner />
@@ -21,27 +37,48 @@ export const Pokemons = () => {
       )
     }
 
-    if (status === STATUS.REJECTED) {
+    if (nextLoadStatus === STATUS.REJECTED) {
       return <ListContainer>Error</ListContainer>
     }
 
-    if (status === STATUS.RESOLVED) {
+    return null
+  }
+
+  function renderPokemons() {
+    if (firstLoadStatus === STATUS.IDLE || firstLoadStatus === STATUS.PENDING) {
+      return (
+        <SpinnerContainer>
+          <Spinner />
+        </SpinnerContainer>
+      )
+    }
+
+    if (firstLoadStatus === STATUS.REJECTED) {
+      return <ListContainer>Error</ListContainer>
+    }
+
+    if (firstLoadStatus === STATUS.RESOLVED) {
+      if (searchPokemonNames.length === 0 && searchKeyword) {
+        return <div>No results</div>
+      }
       const PokemonListToRender = searchPokemonNames.length > 0 ? searchPokemonNames : pokemonNames
       return (
-        <ListContainer>
-          <PokemonList pokemons={PokemonListToRender} />
-        </ListContainer>
+        <>
+          <ListContainer>
+            <PokemonList pokemons={PokemonListToRender} />
+          </ListContainer>
+          {renderNextPokemons()}
+          <div ref={visorRef} />
+        </>
       )
     }
 
     return null
   }
 
-  function handleOnChange(event) {
-    const pokemonNamesFilteredBySearchValue = pokemonNames.filter((pokemonName) =>
-      pokemonName.toLowerCase().includes(event.target.value)
-    )
-    setSearchPokemonNames(pokemonNamesFilteredBySearchValue)
+  async function handleOnChange(keyword) {
+    setSearchKeyword(keyword)
+    setSearchPokemonNames(await getPokemonByKeyword(keyword))
   }
 
   return (
@@ -54,8 +91,7 @@ export const Pokemons = () => {
         <p>151 pokemons</p>
       </Description>
       <Search handleOnChange={handleOnChange} />
-      {renderPokemon()}
-      <button onClick={handleLoadMore}>Load more</button>
+      {renderPokemons()}
     </Container>
   )
 }

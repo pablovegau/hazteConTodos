@@ -45,7 +45,10 @@ npm t
 ## Next steps
 
 - Add more test, and add e2e test with Cypress
-- Extract Search to a component
-- Fix search input when the text doesn't match to show error
-- Add a better loading component
+- Add pokemon cache
+- Fix pokemons without image
+- Review husky webHooks
+- Review webpack config
+- Try to use configjs file
+- Search debounced
 - Fix routing when the page is reloaded
